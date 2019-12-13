@@ -30,7 +30,7 @@ public class ImageDisplayActivity extends AppCompatActivity {
             image = (Image) getIntent().getExtras().get(IMAGE_EXTRA);
         }
         title = findViewById(R.id.title);
-        comment = findViewById(R.id.date);
+        comment = findViewById(R.id.comment);
         date = findViewById(R.id.date);
         Glide.with(this)
                 .load(image.file)
