@@ -6,4 +6,5 @@ public interface GalleryScreen {
 
     void displayImageInGallery(Image image);
     void openImage(Image image);
+    void displayError(ErrorType errorType);
 }

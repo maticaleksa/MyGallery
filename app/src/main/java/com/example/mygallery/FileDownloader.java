@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.example.mygallery.exceptions.UnknownNetworkException;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

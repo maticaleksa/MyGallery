@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.example.mygallery.ErrorDialogFragment;
 import com.example.mygallery.domain.Image;
 import com.example.mygallery.image_display_presentation.ImageDisplayActivity;
 import com.example.mygallery.R;
@@ -46,9 +47,8 @@ public class GalleryActivity extends BaseActivity implements GalleryScreen {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageView = findViewById(R.id.image);
-        list = findViewById(R.id.list);
-        list.setAdapter(imageListAdapter);
-        list.setLayoutManager(new GridLayoutManager(this, 2));
+        setRecycler();
+
         findViewById(R.id.button).setOnClickListener(v -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -63,6 +63,12 @@ public class GalleryActivity extends BaseActivity implements GalleryScreen {
         presenter.onDisplay(this);
     }
 
+    private void setRecycler() {
+        list = findViewById(R.id.list);
+        list.setAdapter(imageListAdapter);
+        list.setLayoutManager(new GridLayoutManager(this, 2));
+    }
+
     @Override
     public void displayImageInGallery(Image image) {
         imageList.add(image);
@@ -73,6 +79,18 @@ public class GalleryActivity extends BaseActivity implements GalleryScreen {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if(requestCode == REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             presenter.onTakePhotoPressed(this);
+        }
+    }
+
+    @Override
+    public void displayError(ErrorType errorType) {
+        ErrorDialogFragment errorDialogFragment = new ErrorDialogFragment();
+        switch (errorType) {
+            case NO_INTERNET:
+                errorDialogFragment.displayDialog(getString(R.string.no_internet_err), getSupportFragmentManager());
+                break;
+            case UNKNOWN:
+                errorDialogFragment.displayDialog(getString(R.string.unknown_err), getSupportFragmentManager());
         }
     }
 

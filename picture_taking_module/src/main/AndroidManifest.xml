@@ -20,7 +20,10 @@
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
 
-        <activity android:name=".EmptyPictureTakingActivity"></activity>
+        <activity
+            android:name=".EmptyPictureTakingActivity"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

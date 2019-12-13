@@ -10,9 +10,11 @@ import javax.inject.Singleton;
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
+
 @Singleton
 @Component(dependencies = PictureTakingUnscopedComponent.class,
-        modules = {NetworkModule.class, ActivitiesModule.class, AndroidInjectionModule.class})
+        modules = {NetworkModule.class, ActivitiesModule.class, AndroidInjectionModule.class,
+                SchedulerModule.class})
 public interface AppComponent {
 
     @Component.Builder
@@ -25,6 +27,7 @@ public interface AppComponent {
         Builder bindPictureTakingComponent(PictureTakingUnscopedComponent component);
     }
 
-    void inject (MyGalleryApplication application);
+    void inject(MyGalleryApplication application);
+
     PictureTakingUnscopedComponent pictureTakingComponent();
 }

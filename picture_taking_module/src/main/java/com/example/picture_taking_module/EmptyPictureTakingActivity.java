@@ -1,5 +1,6 @@
 package com.example.picture_taking_module;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -34,7 +35,8 @@ import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
 public class EmptyPictureTakingActivity extends AppCompatActivity {
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final String PHOTO_PATH = "photoPath";
 
     @Inject
     PictureTakerSubject pictureTakerSubject;
@@ -103,5 +105,17 @@ public class EmptyPictureTakingActivity extends AppCompatActivity {
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         currentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        currentPhotoPath = (String) savedInstanceState.get(PHOTO_PATH);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(PHOTO_PATH, currentPhotoPath);
+        super.onSaveInstanceState(outState);
     }
 }

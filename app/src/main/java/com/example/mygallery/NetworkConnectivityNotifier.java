@@ -5,13 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.util.Log;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
+/**
+ * Used to notify about internet connectivity changes.
+ */
 public class NetworkConnectivityNotifier {
 
     ConnectivityManager cm;
@@ -27,7 +29,6 @@ public class NetworkConnectivityNotifier {
                     boolean connected = false;
                     if (cm.getActiveNetworkInfo() != null)
                         connected = cm.getActiveNetworkInfo().isConnected();
-                    Log.d("asdz", "A " + connected);
                     connectivitySubject.onNext(connected);
                 }
             }
@@ -36,6 +37,10 @@ public class NetworkConnectivityNotifier {
         context.registerReceiver(broadcastReceiver, intentFilter);
     }
 
+    /**
+     * Emits a boolean containing the information about internet connection when ever connectivity
+     * changes.
+     */
     public Observable<Boolean> getNotifier() {
         return connectivitySubject;
     }
